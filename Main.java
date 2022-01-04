@@ -1,31 +1,8 @@
-class BookMaker{
-	public int treasure=50;
-}
-class Player extends Thread{
-	Player another;
-	int treasure=0;
-	String name;
-	BookMaker b;
-	public Player(BookMaker b,String name) {
-		this.b=b;
-		this.name=name;
-	}
-	public void add(Player  another) {
-		this.another=another;
-	}
-	public void run() {
-		/*
-		  sign=0 represent Paper
-		  sign=1 represent Scissors
-		  sign=2 represent stone
-		*/  
-		while(b.treasure!=0) {
-			int bookMaker_sign=(int)(Math.random()*10%3);
-			int player_sign=(int)(Math.random()*10%3);
-			takeOrStay(i,b,bookMaker_sign,player_sign);
-		}
-	}
-	public synchronized void takeOrStay(int round,BookMaker bm,int b_sign,int p_sign) {
+class Game{
+      BookMaker book=new BookMaker();
+      Player playerA=new Player(book,"A");
+      Player playerB=new Player(book,"B");
+      public synchronized void takeOrStay(int round,BookMaker bm,int b_sign,int p_sign) {
 		if(b_sign==0 && p_sign==1 && bm.treasure>=5) {        //b=paper,p=scissors,p win
 			bm.treasure-=5;
 			treasure+=5;
@@ -53,6 +30,34 @@ class Player extends Thread{
 		System.out.println(name+" has "+treasure+" treasure.");
 		System.out.println(another.name+" has "+another.treasure+" treasure.");
 	}
+}
+class BookMaker{
+	public int treasure=50;
+}
+class Player extends Thread{
+	Player another;
+	int treasure=0;
+	String name;
+	BookMaker b;
+	public Player(BookMaker b,String name) {
+		this.b=b;
+		this.name=name;
+	}
+	public void add(Player  another) {
+		this.another=another;
+	}
+	public void run() {
+		/*
+		  sign=0 represent Paper
+		  sign=1 represent Scissors
+		  sign=2 represent stone
+		*/  
+		while(b.treasure!=0) {
+			int bookMaker_sign=(int)(Math.random()*10%3);
+			int player_sign=(int)(Math.random()*10%3);
+			takeOrStay(i,b,bookMaker_sign,player_sign);
+		}
+	}
 	public String signToString(int sign) {  //Translate sign to String
 		String str=null;
 		if(sign==0) {
@@ -68,8 +73,6 @@ class Player extends Thread{
 public class Main {
 	public static void main(String[]argv) {
 		BookMaker book=new BookMaker();
-		Player playerA=new Player(book,"A");
-		Player playerB=new Player(book,"B");
 		playerA.add(playerB);
 		playerB.add(playerA);
 		System.out.println("BookMaker has 50 treasure");
