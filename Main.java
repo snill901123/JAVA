@@ -19,7 +19,7 @@ class Player extends Thread{
 		  sign=1 represent Scissors
 		  sign=2 represent stone
 		*/  
-		for(int i=1;i<=5;i++) {
+		while(b.treasure!=0) {
 			int bookMaker_sign=(int)(Math.random()*10%3);
 			int player_sign=(int)(Math.random()*10%3);
 			takeOrStay(i,b,bookMaker_sign,player_sign);
